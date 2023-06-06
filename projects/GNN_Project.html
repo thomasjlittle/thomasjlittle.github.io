@@ -24,12 +24,18 @@
         /></span>
         <h1 id="logo"><a href="#">Thomas Little</a></h1>
         <p>
-          A collection of projects using various<br />
-          machine learning techniques
+          MS Stanford University<br />
+          Passionate about machine learning<br />
+          egg
         </p>
       </header>
       <nav id="nav">
         <ul>
+          <li><a href="/index.html#one">About</a></li>
+          <li><a href="/index.html#two">Education</a></li>
+          <li><a href="/index.html#three">Projects</a></li>
+        </ul>
+        <!-- <ul>
           <li>
             <a href="GMM_project.html">Ground Motion Modeling using DNNs</a>
           </li>
@@ -47,7 +53,7 @@
             <a href="Nonlin_project.html">Nonlinear Structural Analysis</a>
           </li>
           <li><a href="/index.html">Home</a></li>
-        </ul>
+        </ul> -->
       </nav>
       <footer>
         <ul class="icons">
@@ -82,6 +88,12 @@
       <div id="main">
         <!-- One -->
         <section id="one">
+          <button class="button" onclick="goBack()">Back</button>
+          <script>
+            function goBack() {
+              window.location.href = "/index.html#three";
+            }
+          </script>
           <!-- <div class="image main" data-position="center">
 					<img src="images/banner.jpg" alt="" />
 				</div> -->
@@ -466,16 +478,18 @@ Optimization Algorithm: ['adam']</code></pre>
             effects such as batch normalization and aggregation function had
             negligible effects. For further analysis, we can plot the model
             performance on train (black), validation (blue) and test (pink)
-            data. Through this lens, we can see that this model may benefit from
-            longer training, since its learning curve has not yet flattened out.
-            Additionally, we can see that the training accuracy outpaces
-            validation and test accuracy, which remain very close to one
-            another. This seems to indicate high bias in the model, which is
-            often addressable through means of regularization. Therefore, it may
-            be the case that smaller dropout values may in fact yield better
-            overall model performance (unfortunately it appears we got
-            overzealous with out dropout rate of 0.4). In future tests this will
-            be fine tuned more delicately. <br />
+            data, note that faint lines represent the exact values while the
+            opque lines represent a moving average of the values. Through this
+            lens, we can see that this model may benefit from longer training,
+            since its learning curve has not yet flattened out. Additionally, we
+            can see that the training accuracy outpaces validation and test
+            accuracy, which remain very close to one another. This seems to
+            indicate high bias in the model, which is often addressable through
+            means of regularization. Therefore, it may be the case that smaller
+            dropout values may in fact yield better overall model performance
+            (unfortunately it appears we got overzealous with out dropout rate
+            of 0.4). In future tests this will be fine tuned more delicately.
+            <br />
             <br />
             <p>
               <a href="#" class="image fit"
@@ -577,8 +591,8 @@ Optimization Algorithm: ['adam']</code></pre>
       <section id="footer">
         <div class="container">
           <ul class="copyright">
+            <li><a href="#">Back to Top </a></li>
             <li>&copy; Untitled. All rights reserved.</li>
-            <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
           </ul>
         </div>
       </section>
