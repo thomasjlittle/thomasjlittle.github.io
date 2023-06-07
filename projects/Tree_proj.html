@@ -111,7 +111,7 @@
             improve pretraining techniques and increase the accessibility of
             cutting-edge language modeling to a broader audience.
             <p>
-              <a href="#" class="image fit"
+              <a class="image fit"
                 ><img src="/images/babylm.png" alt="Generic polymer image"
               /></a>
             </p>
@@ -130,15 +130,21 @@
             <br />
             <ul>
               <li>
-                How do transformer models behave when they are trained on small
-                datasets, (as inspired by the limitations of human development)?
+                <strong><span>Question 1</span></strong
+                >: How do transformer models behave when they are trained on
+                small datasets, (as inspired by the limitations of human
+                development)?
               </li>
+              <br />
               <li>
-                How can we measure the compositional understanding of these
+                <strong><span>Question 2</span></strong
+                >: How can we measure the compositional understanding of these
                 transformer models?
               </li>
+              <br />
               <li>
-                How can we encourage transformers to learn compositional
+                <strong><span>Question 3</span></strong
+                >: How can we encourage transformers to learn compositional
                 representations of inputs to enhance their ability to
                 generalize?
               </li>
@@ -152,8 +158,8 @@
             ></script>
             Tree-based linguistic structures have been shown to be a common way
             for humans to understand language, and they have been correlated
-            with increased compositional generalization in models (Murty, 2022).
-            In a recent paper, Murty et al. introduced a novel metric, \(
+            with increased compositional generalization in models (Murty et al.,
+            2022). In a recent paper, Murty et al. introduced a novel metric, \(
             \mathbf{t_{\text{score}}} \), to measure how tree-structured a
             transformer model is. Using this metric, they demonstrated a
             correlation between a high \( \mathbf{t_{\text{score}}} \)
@@ -179,7 +185,7 @@
             <br />
 
             <p>
-              <a href="#" class="image fit"
+              <a class="image fit"
                 ><img
                   src="/images/TreeChart.png"
                   alt="Illustration of how a sentence can be split up using a tree structured approach"
@@ -204,14 +210,14 @@
                 >: Train GPT2-small architectures (6 and 12 encoder layers) on
                 the small dataset (10M tokens).
               </li>
-
+              <br />
               <li>
                 <strong><span>Step 2 | Model Evaluation</span></strong
                 >: Evaluate perplexity and run syntactic evaluations on
                 BLiMP<span style="font-size: 90%">[1]</span> to evaluate the
                 models on common grammatical phenomena in English.
               </li>
-
+              <br />
               <li>
                 <strong
                   ><span>Step 3 | Measure Tree-Structuredness</span></strong
@@ -219,7 +225,7 @@
                 transformer architecture to measure tree-structuredness during
                 training.
               </li>
-
+              <br />
               <li>
                 <strong
                   ><span
@@ -232,6 +238,162 @@
                 learn tree-structured representations of inputs.
               </li>
             </ul>
+            To calculate the additional \( \mathcal{L}_{\text{tree}} \) loss
+            term, we first determine a SCI score for all possible splits of the
+            input sentence. We then recursively search each split to identify
+            the optimal decomposition for the input sentence that maximizes the
+            SCI score. Finally, we compare this optimal decomposition with the
+            SCI score of a randomly selected split using the following formula:
+
+            <span class="math display"
+              >\[ \mathcal{L}_{\text{tree}} = max[(\text{SCI}_{random} + \beta -
+              \text{SCI}_{best}), 0] \]
+            </span>
+
+            This aims to train the model to prefer the optimal splits over
+            randomly selected splits (here \( \beta \) is a hyperparameter
+            currently set to 0.1).
+            <br />
+            <br />
+
+            <h4>Experimental Results</h4>
+            To begin this study, the two baseline GPT2 architectures described
+            above were evaluated. The difference in performance was found to be
+            very minor, so moved forward using only the 6-layer encoder model
+            for increased iteration speed. We then measured the model
+            performance on perplexity, which can be seen in Figure 3 and found
+            it to be decreasing over time. Next, we ran a ensemble of syntactic
+            evaluations using BLiMP (the Benchmark of Linguistic Minimal Pairs)
+            framework (Warstadt et al., 2020), the scores of which can be seen
+            in Table 1 below.
+            <br />
+            <br />
+
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Model</th>
+                    <th>BLiMP Overall Score</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>GPT2-BabyLM-Baseline</td>
+                    <td>0.69</td>
+                  </tr>
+                  <tr>
+                    <td>GPT2-Pretrained</td>
+                    <td>0.83</td>
+                  </tr>
+                  <tr>
+                    <td>Human Performance</td>
+                    <td>0.89</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <h6>Table 1. BLiMP Scores</h6>
+            <br />
+            BLiMP scores tests the model's ability to discern a grammatically
+            incorrect sentence from a pair of sentences, making the random
+            chance score equal to 50%. Lastly, the model \( t_{\text{score}} \)
+            was calculated, and showed an increase in tree-structuredness as
+            training progresed and model performance increased. This mirrors the
+            correlation described by Murty et al. (2022), but still does not
+            show causation.
+            <br />
+            <br />
+
+            <p>
+              <a class="image fit"
+                ><img
+                  src="/images/BaselineResults.png"
+                  alt="Baseline results for GPT2 model"
+              /></a>
+            </p>
+            <h6>Figure 3. Baseline Model Results</h6>
+            <br />
+            <h4>Discussion</h4>
+            The updated GPT2 architecture with a tree-regularizing loss function
+            was retrained on the same data as the baseline model. Its evaluation
+            accuracy is plotted in orange below against the 6 layer encoder
+            baseline model. Perplexity, BLiMP score, and \( t_{\text{score}} \)
+            plots are omitted in this section as they show stochastic behavior
+            as seen in Figure 4 below and do not provide further insight into
+            the behavior of the model.
+            <br />
+            <br />
+            <p>
+              <a class="image fit"
+                ><img
+                  src="/images/evalAcc.png"
+                  alt="Evaluation accuracy for baseline and tree-regularized GPT2 models"
+              /></a>
+            </p>
+            <h6>Figure 4. Evaluation Accuracy</h6>
+            <br />
+            Astute observers may notice that the following figure does not
+            describe a successful improvement in model performance. Even more
+            astute observers may notice that the tree-regularized model was
+            trained on far fewer epochs than the baseline model. The reason for
+            both of these facts is simple: the tree-regularized model we trained
+            was bad. It should be noted that the underlying principles
+            propelling these tests are not inherently flawed, instead the issues
+            likely arose from limiting factors imposed on our implementations.
+            <br />
+            <br />
+            There most likely cause for these issues stems the algorithmic
+            runtime of the recursive chart parsing used to calculate \(
+            \mathcal{L}_{\text{tree}} \). The time complexity for this function
+            is \(O(n^3) \), where \(n\) is related to the length of the input
+            sequence as well as the number of input sentences analyzed per
+            batch. To allow our GPU instance to run in a reasonable amount of
+            time, we truncated all input sentences to a maximum of 10 words and
+            set our maximum sentence batch size to 50.
+            <br />
+            <br />
+            Both of these assumptions likely have very large impacts on model
+            performance, as they increased the inherent stochasticity in the
+            gradient updates, since each update is based on a very small
+            percentage of the overall dataset. Accounting for the fact that our
+            training dataset contained 650,000 input sentences, a batch size of
+            50 is only 0.008 percent of the overall dataset. We attempted using
+            1 percent of the overall dataset to calculate \(
+            \mathcal{L}_{\text{tree}} \) at each step, however, training was
+            estimated to take over 600 hours (again due to the \(O(n^3)\)
+            runtime).
+            <br />
+            <br />
+            <h4>Future Work</h4>
+            Currently, the largest drawback to the viability of this approach is
+            its algorithmic runtime. As it is currently, using this method (even
+            for small-scale datasets) presents challenges for individuals
+            wishing to train models. It is possible to reduce the runtime to at
+            least \(O(n^2)\), which would increase the feasibility of using this
+            method, and would likely result in improvements over the performance
+            seen in this study. Hopefully this avenue is explored in the future
+            so that further research can be conducted on the impact of imposed
+            tree-structured computations in transformer models and their
+            abilities to gain increased compositional generalization.
+            <br />
+            <br />
+            <h4>References</h4>
+            [1] Shikhar Murty, Pratyusha Sharma, Jacob Andreas, and Christopher
+            D. Manning. Characterizing intrinsic compositionality in
+            transformers with tree projections, 2022.
+            <br />
+            <br />
+            [2] Alex Warstadt, Leshem Choshen, Aaron Mueller, Adina Williams,
+            Ethan Wilcox, and Chengxu Zhuang. Call for papers - the babylm
+            challenge: Sample-efficient pretraining on a developmentally
+            plausible corpus, 2023.
+            <br />
+            <br />
+            [3] Alex Warstadt, Alicia Parrish, Haokun Liu, Anhad Mohananey, Wei
+            Peng, Sheng-Fu Wang, and Samuel R. Bowman. Blimp: The benchmark of
+            linguistic minimal pairs for english. Transactions of the
+            Association for Computational Linguistics, 8:377-392, 2020.
           </div>
         </section>
       </div>
