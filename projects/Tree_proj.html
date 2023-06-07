@@ -33,7 +33,7 @@
         <ul>
           <li><a href="/index.html#one">About</a></li>
           <li><a href="/index.html#two">Education</a></li>
-          <li><a href="/index.html#three">Projects</a></li>
+          <li><a href="/index.html#three" class="active">Projects</a></li>
         </ul>
         <!-- <ul>
           <li>
@@ -102,72 +102,136 @@
               </h3>
               <p>Created for Stanford CS224N: Natural Language Processing</p>
             </header>
+            Over the last several years, transformer language models have shown
+            continual improvement, boasting massive training corpuses that are
+            increasingly out of reach for individuals and smaller research
+            teams. The BabyLM challenge proposes a task to train models using
+            limited, child-directed text in a quantity similar to the amount of
+            words encountered by a 13 year old. The goal of this challenge is to
+            improve pretraining techniques and increase the accessibility of
+            cutting-edge language modeling to a broader audience.
             <p>
-              Faucibus sed lobortis aliquam lorem blandit. Lorem eu nunc metus
-              col. Commodo id in arcu ante lorem ipsum sed accumsan erat
-              praesent faucibus commodo ac mi lacus. Adipiscing mi ac commodo.
-              Vis aliquet tortor ultricies non ante erat nunc integer eu ante
-              ornare amet commetus vestibulum blandit integer in curae ac
-              faucibus integer non. Adipiscing cubilia elementum. Lorem ipsum
-              dolor sit amet consectetur adipisicing elit. Illo nisi tempora
-              minima fugit soluta aut dicta quisquam expedita enim nostrum?
-              Aliquam dolorem voluptate, quisquam nam quae soluta, deleniti,
-              quis minus nulla vero fugiat quia voluptatibus placeat
-              consequuntur excepturi vel ipsum labore error! Quasi ullam fugiat
-              rerum, rem incidunt mollitia adipisci perferendis sed? Praesentium
-              quae tenetur quos accusantium ab blanditiis adipisci asperiores
-              voluptates qui veniam officia, necessitatibus inventore laboriosam
-              eaque repellendus? Laborum natus ut dolores maiores ducimus
-              dignissimos, iusto voluptates consequuntur consectetur eum. Quis
-              possimus unde autem explicabo ipsam atque nihil minus temporibus
-              tenetur, alias in facilis nemo iste reprehenderit, ratione rem
-              dolorem velit aspernatur officiis facere, quod quasi ipsum
-              voluptatem excepturi. Obcaecati, quas pariatur. Minus in fuga quam
-              amet atque illum eveniet odit, harum perspiciatis saepe
-              voluptatibus, nostrum error repellat maxime autem modi expedita.
-              Veritatis ipsa perspiciatis maiores facere quasi eaque magnam?
-              Sequi deserunt officiis nemo quia veniam sint! Soluta unde quaerat
-              enim libero facere minima illo vitae maiores aspernatur a pariatur
-              quos sequi et, provident voluptate harum accusantium earum?
-              Architecto obcaecati suscipit impedit dolorum, consectetur nemo
-              voluptatem molestiae consequatur laborum ipsum quo iure soluta
-              fuga voluptatum laboriosam quos asperiores, necessitatibus harum
-              sed saepe corporis ducimus est! Eligendi reprehenderit veritatis,
-              laboriosam dolore sint ab ipsam dignissimos, amet a asperiores
-              deserunt nam optio reiciendis nihil suscipit vel alias quisquam
-              esse mollitia et ducimus dicta id fuga! Repellendus aliquid ut qui
-              officiis ab corporis dolorem reiciendis in, et quas illo quisquam
-              sed, esse ex maiores natus! Doloremque laboriosam rem voluptates
-              in expedita nesciunt veritatis voluptatem rerum hic ex! Eligendi
-              ut odit vero nemo laudantium facere, temporibus eius enim, debitis
-              alias consequatur dicta modi dolorum ab delectus qui. Possimus,
-              aperiam nisi iure, eos sequi eius cumque nihil esse dolorem libero
-              dicta? Quae nemo nostrum veniam, quam qui, fugit blanditiis
-              eligendi quidem eveniet rem recusandae? Itaque quam voluptas ullam
-              rerum quos! Quia accusantium nemo esse illum. Quod sint inventore
-              et earum blanditiis, non rem quasi exercitationem quae
-              voluptatibus officia totam architecto nulla molestias repellat
-              optio quis consequuntur harum porro ab voluptas. Hic earum quis
-              recusandae, error aperiam similique veniam incidunt impedit rerum
-              laudantium dolores reprehenderit, minus fugiat? Doloribus
-              repudiandae quibusdam corporis eos quae corrupti at architecto
-              cumque blanditiis error, sapiente consequatur, dolorem ullam,
-              ducimus quisquam mollitia ut vitae odio voluptatum quas voluptas
-              hic vel tempore? Accusamus, corporis. Enim itaque quasi eius aut
-              culpa cupiditate? Rem omnis dolorem animi repellendus minus facere
-              voluptatibus, aliquid numquam earum ipsa dignissimos dolorum nulla
-              id expedita provident at excepturi et maiores! Autem sit omnis,
-              veritatis rem non nostrum, voluptas commodi maxime deserunt
-              tenetur itaque nam deleniti sequi in, voluptatibus obcaecati
-              ratione officiis ipsa at beatae. Obcaecati in eligendi repellat
-              deserunt placeat, dolorum dolores tempore asperiores impedit, sint
-              ipsam, voluptate cum. Qui recusandae nam ut voluptatum vero? Ab
-              quaerat molestias fugiat quam! Nemo, repudiandae. Odit
-              perspiciatis minus reiciendis quae! Dolorem ea eius error
-              accusamus corrupti numquam rem nulla eum amet totam id ab illum
-              vero ad animi, impedit nam voluptas reiciendis itaque deserunt
-              aliquam accusantium. Veritatis illum magnam libero quasi.
+              <a href="#" class="image fit"
+                ><img src="/images/babylm.png" alt="Generic polymer image"
+              /></a>
             </p>
+            <h6>
+              Alex Warstadt, Leshem Choshen, Aaron Mueller, Adina Williams,
+              Ethan Wilcox, and Chengxu Zhuang. Call for papers - the babylm
+              challenge: Sample-efficient pretraining on a developmen- tally
+              plausible corpus, 2023.
+            </h6>
+            <br />
+            To address the BabyLM challenge, this study investigates whether
+            increasing the compositionality of transformer models improves the
+            model's ability to understand linguistic structure. Specifically,
+            this study addresses the following three questions:
+            <br />
+            <br />
+            <ul>
+              <li>
+                How do transformer models behave when they are trained on small
+                datasets, (as inspired by the limitations of human development)?
+              </li>
+              <li>
+                How can we measure the compositional understanding of these
+                transformer models?
+              </li>
+              <li>
+                How can we encourage transformers to learn compositional
+                representations of inputs to enhance their ability to
+                generalize?
+              </li>
+            </ul>
+
+            <h4>Background: Tree Based Composition</h4>
+            <script
+              type="text/javascript"
+              async
+              src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"
+            ></script>
+            Tree-based linguistic structures have been shown to be a common way
+            for humans to understand language, and they have been correlated
+            with increased compositional generalization in models (Murty, 2022).
+            In a recent paper, Murty et al. introduced a novel metric, \(
+            \mathbf{t_{\text{score}}} \), to measure how tree-structured a
+            transformer model is. Using this metric, they demonstrated a
+            correlation between a high \( \mathbf{t_{\text{score}}} \)
+            (indicating tree-structuredness) and increased compositional
+            generalization in transformer models.
+
+            <span class="math display"
+              >\[ t_{\text{score}} \triangleq \frac{1}{|\mathcal{D}|} \sum_{S
+              \in \mathcal{D}} \left( \mathbb{E}_{T} \left[
+              \operatorname{SCI}(S, T) \right] - \operatorname{SCI}\left( S,
+              \widehat{T}_{\text{proj}}(S) \right) \right). \]</span
+            >
+
+            This metric searches for the optimal bracketing of an input sentence
+            that maximizes the span contextual invariance (SCI) of each bracket.
+            By using a similarity function to measure how similar the embedding
+            of the bracketed sentence is to the original sentence embedding, we
+            can determine a relative score for how effective the transformer is
+            at learning heierarchical composition. A visual representation of a
+            tranformer comparing a bracketed embedding to the original embedding
+            can be seen in Figure 2 below.
+            <br />
+            <br />
+
+            <p>
+              <a href="#" class="image fit"
+                ><img
+                  src="/images/TreeChart.png"
+                  alt="Illustration of how a sentence can be split up using a tree structured approach"
+              /></a>
+            </p>
+            <h6>
+              Shikhar Murty, Pratyusha Sharma, Jacob Andreas, and Christopher D.
+              Manning. Characterizing intrinsic compositionality in transformers
+              with tree projections, 2022.
+            </h6>
+            <br />
+            <h4>Approach</h4>
+            In order to investigate the potential benefits of incorporating
+            tree-structured computations into the transformer architectures, the
+            study was split into a series of systematic steps. The detailed
+            process for this study includes the following steps:
+            <br />
+            <br />
+            <ul>
+              <li>
+                <strong><span>Step 1 | Baseline Language Model</span></strong
+                >: Train GPT2-small architectures (6 and 12 encoder layers) on
+                the small dataset (10M tokens).
+              </li>
+
+              <li>
+                <strong><span>Step 2 | Model Evaluation</span></strong
+                >: Evaluate perplexity and run syntactic evaluations on
+                BLiMP<span style="font-size: 90%">[1]</span> to evaluate the
+                models on common grammatical phenomena in English.
+              </li>
+
+              <li>
+                <strong
+                  ><span>Step 3 | Measure Tree-Structuredness</span></strong
+                >: Incorporate the \( t_{\text{score}} \) metric into the GPT2
+                transformer architecture to measure tree-structuredness during
+                training.
+              </li>
+
+              <li>
+                <strong
+                  ><span
+                    >Step 4 | Encouraging Tree-Structured Computations</span
+                  ></strong
+                >: We replaced the cross-entropy loss \(
+                \mathcal{L}_{\text{entropy}} \) of GPT-2 by a regularized loss:
+                \( \mathcal{L}_{\text{entropy}} + \lambda
+                \mathcal{L}_{\text{tree}} \) to encourage the transformer to
+                learn tree-structured representations of inputs.
+              </li>
+            </ul>
           </div>
         </section>
       </div>
