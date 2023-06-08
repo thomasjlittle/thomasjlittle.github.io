@@ -2478,6 +2478,7 @@ input, select, textarea {
 		}
 
 		table th {
+			border: solid 1px #e4e4e4;
 			color: #777;
 			font-size: 0.9em;
 			font-weight: 700;
@@ -2497,10 +2498,8 @@ input, select, textarea {
 			border-collapse: separate;
 		}
 
-			table.alt tbody tr td {
-				border: solid 2px #e4e4e4;
-				border-left-width: 0;
-				border-top-width: 0;
+			table.alt tbody tr td{
+				border: solid 1px #e4e4e4;
 			}
 
 				table.alt tbody tr td:first-child {

@@ -25,29 +25,16 @@
         <h1 id="logo"><a href="#">Thomas Little</a></h1>
         <p>
           MS Stanford University<br />
-          Passionate about machine learning<br />
-          egg
+          A repository of my cool fun projects and some other information<br />
         </p>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script>
-          $(document).ready(function () {
-            // Apply fade-out effect when clicking on a link with the "fade" class
-            $("a.fade").click(function (e) {
-              e.preventDefault();
-              var url = $(this).attr("href");
-              $("html").addClass("fade-out");
-              setTimeout(function () {
-                window.location.href = url;
-              }, 300); // Adjust the delay as needed to match the CSS transition duration
-            });
-          });
-        </script>
       </header>
       <nav id="nav">
         <ul>
           <li><a href="/index.html#one">About</a></li>
-          <li><a href="/index.html#two">Education</a></li>
-          <li><a href="/index.html#three" class="active">Projects</a></li>
+          <li>
+            <a href="/index.html#two" class="active">Projects</a>
+          </li>
+          <li><a href="/index.html#three">Education</a></li>
         </ul>
         <!-- <ul>
           <li>
@@ -107,7 +94,7 @@
           <button class="button" onclick="goBack()">Back</button>
           <script>
             function goBack() {
-              window.location.href = "/index.html#three";
+              window.location.href = "/index.html#two";
             }
           </script>
           <!-- <div class="image main" data-position="center">

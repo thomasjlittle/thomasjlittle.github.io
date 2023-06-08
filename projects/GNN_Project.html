@@ -25,15 +25,16 @@
         <h1 id="logo"><a href="#">Thomas Little</a></h1>
         <p>
           MS Stanford University<br />
-          Passionate about machine learning<br />
-          egg
+          A repository of my cool fun projects and some other information<br />
         </p>
       </header>
       <nav id="nav">
         <ul>
           <li><a href="/index.html#one">About</a></li>
-          <li><a href="/index.html#two">Education</a></li>
-          <li><a href="/index.html#three" class="active">Projects</a></li>
+          <li>
+            <a href="/index.html#two" class="active">Projects</a>
+          </li>
+          <li><a href="/index.html#three">Education</a></li>
         </ul>
         <!-- <ul>
           <li>
@@ -91,7 +92,7 @@
           <button class="button" onclick="goBack()">Back</button>
           <script>
             function goBack() {
-              window.location.href = "/index.html#three";
+              window.location.href = "/index.html#two";
             }
           </script>
           <!-- <div class="image main" data-position="center">
@@ -107,7 +108,10 @@
             </header>
             <p>
               <a href="#" class="image fit"
-                ><img src="/images/polymer.jpg" alt="Generic polymer image"
+                ><img
+                  src="/images/polymer.jpg"
+                  alt="Generic polymer image"
+                  style="margin-bottom: 0.5em"
               /></a>
             </p>
             <h6>
@@ -196,6 +200,7 @@
                 ><img
                   src="/images/copolymer.jpg"
                   alt="An illustration of different diblock configurations"
+                  style="margin-bottom: 0.5em"
               /></a>
             </p>
             <h5>
@@ -496,6 +501,7 @@ Optimization Algorithm: ['adam']</code></pre>
                 ><img
                   src="/images/results.jpg"
                   alt="Graph showing model training accuracy"
+                  style="margin-bottom: 0.5em"
               /></a>
             </p>
             <h5>Optimal Model Accuracy (GATConv with no Dropout)</h5>
