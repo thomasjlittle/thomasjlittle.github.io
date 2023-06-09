@@ -103,16 +103,133 @@
           <div class="container">
             <header class="major">
               <h3>Ground Motion Modeling using Deep Neural Networks</h3>
-              <p>Created for Stanford CS230: Deep Learning</p>
+              <p>Adapted From a Project for Stanford CS230: Deep Learning</p>
             </header>
-            <p>
-              Faucibus sed lobortis aliquam lorem blandit. Lorem eu nunc metus
-              col. Commodo id in arcu ante lorem ipsum sed accumsan erat
-              praesent faucibus commodo ac mi lacus. Adipiscing mi ac commodo.
-              Vis aliquet tortor ultricies non ante erat nunc integer eu ante
-              ornare amet commetus vestibulum blandit integer in curae ac
-              faucibus integer non. Adipiscing cubilia elementum.
-            </p>
+            <h4>Introduction</h4>
+            Earthquakes are one of the most lethal naturally occurring hazards,
+            accounting for three of the top five deadliest natural disasters in
+            recent history[3]. In addition to being extremely hazardous,
+            earthquakes are also unpredictable, making it difficult to design
+            for their effects. One method that can be used to estimate unknown
+            earthquake behavior is to construct physics-based models of geologic
+            hazards and estimate the impacts of different seismic scenarios.
+            This method, however, is very computationally expensive and requires
+            significant physical knowledge of the fault and surrounding area.
+            Instead a common alternative is to use pre-constructed ground motion
+            prediction equations (GMPEs) to estimate key response parameters.
+            These GMPEs are attenuation relationships that take key
+            characteristics of the earthquake's estimated source, path, and site
+            and output parameters used for structural design and hazard
+            mitigation purposes.
+            <br />
+            <br />
+            GMPEs are generally difficult to create and require large amounts of
+            knowledge about the underlying mechanics of seismic events and
+            geophysical processes. As a result, there are only a handful of
+            GMPEs that are widely used in practice. As you increase the
+            parameters of a GMPE, generally the range of scenarios and
+            geographic locations that it is applicable to, decreases while its
+            estimated accuracy increases. Because of this, there are different
+            GMPEs currently used with a wide variety of use cases that depend on
+            required accuracy, generalizability and available information.
+            <br />
+            <br />
+            The goal of this study is to determine the feasibility of using
+            machine learning methods to circumvent this required knowledge and
+            produce new GMPEs with a model that has no prior information on
+            geomechanical principles. One use case of a framework such as this
+            would be to construct a GMPE specific to the available inputs of a
+            given earthquake scenario to create a more accurate hazard
+            prediction than using an existing GMPE with either too many or too
+            few input parameters.
+            <br />
+            <br />
+            GMPEs are often used to output a response spectrum, which is a tool
+            used by structural engineers and risk analysts to evaluate the
+            potential effects of a seismic event on varying building taxonomies.
+            Therefore, the output of the trained model will also be a response
+            spectrum. In order to quantify the accuracy of this model output,
+            the response spectrum from both the GMPE and from the learned model
+            will be compared to a “ground-truth” response spectrum calculated by
+            running a linear response history analysis on the accelerogram that
+            corresponds to a given earthquake event. Since these response
+            spectra are a series of discrete paired values, the accuracy can be
+            calculated using the mean average percent error of each series. Mean
+            percent error was chosen as a metric in an attempt to limit the
+            over-penalization of response spectra with large ordinate
+            magnitudes, as this is widely variable between seismic events.
+            <br />
+            <br />
+            <h4>Dataset</h4>
+            he dataset chosen for this analysis was NGA-West2, a collection of
+            ground motion attenuation data covering the western United States.
+            This database contains over 200,000 realizations that include
+            spatial and geotechnical data regarding both the seismic event, and
+            the location where the ground motion was recorded, providing a
+            robust description of each instance.
+            <br />
+            <br />
+            Each instance in the database also includes a response spectrum
+            associated with the event at the location it was recorded, which
+            will serve as the "ground-truth" for each instance. Although the
+            NGA-West2 database contains ground motions collected across a
+            variety of locations, it is important to note that this database is
+            not comprehensive over all tectonic regimes and largely represents
+            shallow crustal events. Other databases that may be explored in the
+            future include GeoNet, FDSN, and K-Net, all of which contain strong
+            motion data from across the globe.
+            <br />
+            <br />
+            The primary reason these databases were excluded from this analysis
+            was due to the GMPE used for performance comparison. The GMPE used
+            in this analysis is the 2014 Boore, Stewart, Seyhan, and Atkinson
+            (BSSA) GMPE (1), which is only valid over shallow crustal faults, so
+            using it as a performance metric over all tectonic regimes would not
+            be appropriate. Since the NGA-West2 database contains primarily
+            shallow crustal events, it was determined that this would be a good
+            initial database to use in conjunction with the BSSA GMPE as a
+            metric to gauge new model performance. The few events that do not
+            strictly conform to the shallow crustal regime were left in the
+            dataset to serve as adversarial examples for training, in attempts
+            to increase the robustness of the trained model output.
+            <br />
+            <br />
+            One key element of the NGA-West2 database is that it contains
+            recordings of the same seismic event from many different geographic
+            locations, all of which may produce different response spectra.
+            Because of this, the data could not be split randomly into test,
+            train, and validation sets. Instead, the data was first clustered to
+            ensure that all recordings of a specific event were contained within
+            only one set. Once this was confirmed, the data was shuffled within
+            each dataset to eliminate any sequential dependencies. The 200,000
+            events were split roughly into 80% for training, 10% for validation,
+            and 10% for testing.
+            <br />
+            <br />
+            <h4>Model</h4>
+
+            <h4>References</h4>
+            [1] Boore, D. M., Stewart, J. P., Seyhan, E., and Atkinson, G. M.
+            (2014). “NGA-West2 Equations for Predicting PGA, PGV, and 5% Damped
+            PSA for Shallow Crustal Earthquakes.” Earthquake Spectra, 30(3),
+            1057-1085.
+            http://www.earthquakespectra.org/doi/abs/10.1193/070113EQS184M
+            <br />
+            <br />
+            [2] Dhanya, J., and S. T. G. Raghukanth. "Ground motion prediction
+            model using ar- tificial neural network." Pure and Applied
+            Geophysics 175.3 (2018): 1035-1064.
+            https://link.springer.com/article/10.1007/s11600-019-00395-yBib1
+            <br />
+            <br />
+            [3] Lake, T. (n.d.). 6 of the world's Deadliest Natural disasters.
+            Encyclopædia Britannica. Re- trieved December 9, 2022, from
+            https://www.britannica.com/list/6-of-the-worlds-deadliest-
+            natural-disasters
+            <br />
+            <br />
+            [4] “Welcome to the Peer Ground Motion Database.” PEER Ground Motion
+            Database - PEER Center, https://ngawest2.berkeley.edu/
           </div>
         </section>
       </div>

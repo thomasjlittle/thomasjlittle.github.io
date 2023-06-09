@@ -101,7 +101,10 @@
                 Using Transformer Intervention to Increase Compositionality in
                 Small Language Models
               </h3>
-              <p>Created for Stanford CS224N: Natural Language Processing</p>
+              <p>
+                Adapted From a Project for Stanford CS224N: Natural Language
+                Processing
+              </p>
             </header>
             Over the last several years, transformer language models have shown
             continual improvement, boasting massive training corpuses that are
@@ -351,14 +354,29 @@
             likely arose from limiting factors imposed on our implementations.
             <br />
             <br />
-            There most likely cause for these issues stems the algorithmic
-            runtime of the recursive chart parsing used to calculate \(
-            \mathcal{L}_{\text{tree}} \). The time complexity for this function
-            is \(O(n^3) \), where \(n\) is related to the length of the input
-            sequence as well as the number of input sentences analyzed per
-            batch. To allow our GPU instance to run in a reasonable amount of
-            time, we truncated all input sentences to a maximum of 10 words and
-            set our maximum sentence batch size to 50.
+            By checking the \( t_{\text{score}} \) of the model at various
+            checkpoints, we can see that the model was learning to produce more
+            tree-structured outputs. However, it is clear from the evaluation
+            accuracies that this did not result in improved model performance.
+            It is likely that the regularization factor \( \lambda \) was too
+            large, leading the model to overfit on the tree-structuredness of
+            the training data. Despite running the model with several different
+            values of \( \lambda \), we were unable to find a value that
+            resulted in improved model performance. The challenge with iterating
+            on this variable stems form the algorithmic runtime of the recursive
+            chart parsing used to calculate \( \mathcal{L}_{\text{tree}} \). The
+            time complexity for this function is \(O(n^3) \), where \(n\) is
+            related to the length of the input sequence as well as the number of
+            input sentences analyzed per batch. Unfortunately, this means that
+            the runtime of the model is incredibly slow. In attempts to reduce
+            this runtime, we made additional simplifications that would speed up
+            the calculations but would likely have a negative impact on model
+            performance. The two main simplifications we made were truncating
+            all input sentences to a maximum of 10 words and set our maximum
+            sentence batch size to 50. A future goal of this study would be to
+            quantify the impact of these assumptions by running the model with
+            increasing words and batch sizes, as it is currently unknown how
+            heavily this impacts the model performance.
             <br />
             <br />
             Both of these assumptions likely have very large impacts on model
