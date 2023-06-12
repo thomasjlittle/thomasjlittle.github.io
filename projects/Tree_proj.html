@@ -392,16 +392,25 @@
             <br />
             <br />
             <h4>Future Work</h4>
-            Currently, the largest drawback to the viability of this approach is
-            its algorithmic runtime. As it is currently, using this method (even
-            for small-scale datasets) presents challenges for individuals
-            wishing to train models. It is possible to reduce the runtime to at
-            least \(O(n^2)\), which would increase the feasibility of using this
-            method, and would likely result in improvements over the performance
-            seen in this study. Hopefully this avenue is explored in the future
-            so that further research can be conducted on the impact of imposed
-            tree-structured computations in transformer models and their
-            abilities to gain increased compositional generalization.
+            Since it is clear from these tests that the model overfit to the
+            tree-structuredness of the training data, it would be interesting to
+            see how the model performs if we scaled up the regularization factor
+            \( \lambda \) during training. If we started with a value of zero
+            and slowly increased it over time, it may allow the model to learn a
+            more comprehensive understanding of language before imposing the
+            tree-structured constraint. This may result in a more robust model
+            that is able to construct a more compositional understanding of
+            language. Another drawback to the viability of this approach is its
+            algorithmic runtime of the tree-regularizing loss function. As it is
+            currently, using this method (even for small-scale datasets)
+            presents challenges for individuals wishing to train models. It is
+            possible to reduce the runtime to at least \(O(n^2)\), which would
+            increase the feasibility of using this method, and would likely
+            result in improvements over the performance seen in this study.
+            Hopefully this avenue is explored in the future so that further
+            research can be conducted on the impact of imposed tree-structured
+            computations in transformer models and their abilities to gain
+            increased compositional generalization.
             <br />
             <br />
             <h4>References</h4>
