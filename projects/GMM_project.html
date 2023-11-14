@@ -270,11 +270,84 @@
               />
             </figure>
 
-            Once the model
+            There are a couple things to note in this figure, the first being that there appears to be good convergence
+            with a negative sloping trend, indicating that longer training may yield a more optimal model. However, I
+            was training this model on my silly little desktop and 1500 epochs already took me awhile, so I called
+            it a day (or several) after reaching this point. All models are checkpointed so in theory I could continue 
+            training where this left off, but I don't want to so... The next feature of note in this figure is the
+            similarity in training and validation losses, while not perfect, this result was much better than many of the
+            others models trained and it appeared to yield relatively robust predictions on the holdout dataset.
+            To evaluate the model on the holdout test set, an evaluation metric of
+            mean average percentage error was used for reasons previously stated. To assess the performance of the model, 
+            the Boore-Atkinson ground motion prediction equation was evaluated on the same holdout test set using the same metric for comparison.
+            It is important to note that two tests were being run with the DNN, the first goal I had was to see if a DNN could recreate
+            the Boore-Atkinson GMPE using the same inputs and no external knowledge of geomechanical phenomena, the second goal was to
+            see if I could train a DNN that more accurately predicted response spectra, using additional input parameters. In the following
+            table you can see the model performance of the Boore-Atkinson GMPE followed by the performance of the DNN using only the Boore-Atkinson
+            input parameters (BSSA parameters), followed by the DNN using all available input parameters from the given database.
 
+            <br />
+            <br />
 
-            Although the model appears to more closely predict the response spectra, it is still 
-            unable to predict late period acceleration spikes, as can be seen in the figure below. 
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Model</th>
+                    <th>MAPE Test Loss</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Boore-Atkinson GMPE</td>
+                    <td>25.43</td>
+                  </tr>
+                  <tr>
+                    <td>My Cute DNN - BSSA Parameters</td>
+                    <td>28.44</td>
+                  </tr>
+                  <tr>
+                    <td>My Cute DNN - All Parameters</td>
+                    <td>8.31</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            We can see that the DNN using only the BSSA input parameters achieves a very similar loss to that of the Boore-Atkinson GMPE, 
+            to me this indicates that the existing GMPE is highly tuned and provides an optimal solution for the given input parameters.
+            This is not surprising as this was one of the most widely used ground motion prediction equations for many years and clearly
+            had some smart people with big brains behind it. Nice job Boore and Atkinson! We can also see that when given additional inputs,
+            the DNN is able to achieve a much lower loss than the previous models. 
+            <br />
+            <br />
+
+            To visualize the outputs, I wanted to see how closely my DNN matched the actual response spectra and compare it
+            to the BSSA GMPE. So I plotted a bunch of pictures and I will show you them now.
+
+            <figure>
+              <img
+                class="image fit"
+                src="/images/Spectra.png"
+                alt="Response Spectra"
+                style="margin-bottom: 0m"
+              />
+              <figcaption style="text-align: center">
+                <h5>
+                  Figure 3. Sampling of Response Spectra
+                </h5>
+              </figcaption>
+            </figure>
+            <br />
+
+            Here the green lines show the Boore-Atkinson GMPE and the blue lines depict the DNN performance (using all available parameters).
+            The orange line shows the response spectra calculated using the accelerograms from the dataset and represent the ground-truth
+            values for each seismic event.
+
+            Although the DNN appears to more closely predict the response spectra, there are still several
+            key ways the model is imperfect. The model is still unable to predict late period acceleration spikes, 
+            as can be seen in the figure below. Many existing GMPEs similarly struggle with this task and unfortunately, 
+            so does our new DNN friend.
             <figure>
               <img
                 class="image fit"
@@ -288,14 +361,57 @@
                 </h5>
               </figcaption>
             </figure>
+            <br />
+      
 
             This is problematic because it is underpredicting the effects of seismic events on structures
             with longer periods, which typically comprise of taller structures and long-span bridges, both of
-            which can cause serious issues if damages.
+            which can cause serious issues if damages. However, unusual spikes like these can often be attributed to 
+            more interesting soil conditions at the site of the accelerogram recording and are therefore more challenging to predict without
+            additional data.
 
             <br />
             <br />
-            
+
+            <h4>Future Work</h4>
+            Alright so if it was not clear by this point, I have written this in many different sittings, spanning many different moods,
+            for the last bit I have been in a silly goofy mood, but I am not about to paste in a section that I wrote
+            back in grad school when I was far less silly and far less goofy. I apologize for the solemnity of the following passage.
+            <br />
+            <br />
+            The purpose of a GMPE is to provide an attenuation relationship without requiring excessive amounts
+            of effort. If the burden of collecting input feature data outweighs the benefit of using the GMPE,
+            it no longer serves its purpose as an efficient calculation tool. For this reason, further investigation
+            should be made into the features chosen for this analysis to conclude whether this is the case for the
+            features in this model. Features such as hypocentral depth, PGA, and PGV (lol, if you are a Structural Engineer / 
+            Geotech you will realize how ridiculous it is to use PGA and PGV as inputs to a GMPE, but if you are neither of those, 
+            don't worry about it, those are super realistic and easy input variables and in no way bias the output of my DNN model...) 
+            may require intensive
+            effort to calculate for unknown faults and therefore negate the usefulness of this model in realistic
+            applications. Additionally, study into the covariance of the input parameters could help to eliminate
+            unnecessary or redundant features. Lastly, alternate model architectures could be explored. The fact
+            that the model performs better when predicting the entire response spectrum series (right sorry, this is something I 
+            have not yet mentioned and will not mention - get pranked, but basically, I tried to predict just a single point on the spectrum instead
+            of predicting the entire spectrum all at once and it was like 10x slower and less accurate) seems to indicate
+            dependence between points on the response spectrum. This information could be used to justify a
+            recurrent neural network architecture, which may provide even better results (spoiler, it didn't - at least in my brief trials).
+            <br />
+            <br />
+            <h4> Conclusion</h4>
+            While the models presented in this study seem to indicate that using more parameters results in a
+            more accurate model of ground motion attenuation, it is important to consider the tradeoff between
+            collecting the data for these input variables and the desired level of model accuracy. As discussed
+            in the Future Work section, some parameters used in the presented models may be very difficult
+            to collect in practice, making the feasibility of using them potentially unrealistic. However, all
+            models display similar or better performance than the baseline BSSA GMPE, indicating that machine
+            learning frameworks can be used to predict ground motion attenuation without the model requiring
+            any prior knowledge of geomechanical systems. This method shows promise as a feasible alternative
+            to traditional GMPE development and will hopefully continue to be investigated by future researchers.
+            <br />
+            <br />
+            Ok thank you for reading :0) 
+            <br />
+            <br />
 
             <h4>References</h4>
             [1] Boore, D. M., Stewart, J. P., Seyhan, E., and Atkinson, G. M.
