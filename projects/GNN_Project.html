@@ -486,17 +486,12 @@ Optimization Algorithm: ['adam']</code></pre>
             effects such as batch normalization and aggregation function had
             negligible effects. For further analysis, we can plot the model
             performance on train (black), validation (blue) and test (pink)
-            data, note that faint lines represent the exact values while the
-            opque lines represent a moving average of the values. Through this
+            data, through this
             lens, we can see that this model may benefit from longer training,
-            since its learning curve has not yet flattened out. Additionally, we
-            can see that the training accuracy outpaces validation and test
-            accuracy, which remain very close to one another. This seems to
-            indicate high bias in the model, which is often addressable through
-            means of regularization. Therefore, it may be the case that smaller
-            dropout values may in fact yield better overall model performance
-            (unfortunately it appears we got overzealous with out dropout rate
-            of 0.4). In future tests this will be fine tuned more delicately.
+            since its learning curve has not yet flattened out. We can also see
+            good convergence between the training, validation, and testing accuracy,
+            indicating a high-performing model that does not appear to be suffering
+            from high bias or variance (yippee).
             <br />
             <br />
             <p>
@@ -581,7 +576,7 @@ Optimization Algorithm: ['adam']</code></pre>
             10(11):1339-1345, 2021. PMID: 35549019.
             <br />
             <br />
-            [2] Mochigase Lin Audus Olsen Rebello, Arora. Block Copolymer Phase
+            [2] Mochigase, Lin, Audus, Olsen, Rebello, Arora. Block Copolymer Phase
             Behavior Database (BCDB), 5 2021.
             <br />
             <br />
