@@ -109,11 +109,13 @@
             Over the last several years, transformer language models have shown
             continual improvement, boasting massive training corpuses that are
             increasingly out of reach for individuals and smaller research
-            teams. The BabyLM challenge proposes a task to train models using
-            limited, child-directed text in a quantity similar to the amount of
-            words encountered by a 13 year old. The goal of this challenge is to
-            improve pretraining techniques and increase the accessibility of
-            cutting-edge language modeling to a broader audience.
+            teams. The
+            <u><a href="https://babylm.github.io/"> BabyLM Challenge </a></u>
+            proposes a task to train models using limited, child-directed text
+            in a quantity similar to the amount of words encountered by a 13
+            year old. The goal of this challenge is to improve pretraining
+            techniques and increase the accessibility of cutting-edge language
+            modeling to a broader audience.
             <p>
               <a class="image fit"
                 ><img
@@ -130,9 +132,9 @@
             </h6>
             <br />
             To address the BabyLM challenge, this study investigates whether
-            increasing the compositionality of transformer models improves the
+            increasing the compositionality of transformer models improves a
             model's ability to understand linguistic structure. Specifically,
-            this study addresses the following three questions:
+            this study addresses the following questions:
             <br />
             <br />
             <ul>
@@ -155,7 +157,19 @@
                 representations of inputs to enhance their ability to
                 generalize?
               </li>
+              <br />
+              <li>
+                <strong><span>Question 4</span></strong
+                >: Do these compositional representations improve the model's
+                ability to generalize?
+              </li>
             </ul>
+            Before diving too far into the details of this study, it is
+            important to understand the concept of compositionality in language
+            and why it might be a useful tool for improving the generalization
+            of small language models.
+            <br />
+            <br />
 
             <h4>Background: Tree Based Composition</h4>
             <script
@@ -163,15 +177,23 @@
               async
               src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"
             ></script>
-            Tree-based linguistic structures have been shown to be a common way
-            for humans to understand language, and they have been correlated
-            with increased compositional generalization in models (Murty et al.,
-            2022). In a recent paper, Murty et al. introduced a novel metric, \(
-            \mathbf{t_{\text{score}}} \), to measure how tree-structured a
-            transformer model is. Using this metric, they demonstrated a
-            correlation between a high \( \mathbf{t_{\text{score}}} \)
-            (indicating tree-structuredness) and increased compositional
-            generalization in transformer models.
+            The basic idea behind compositionality is that the meaning of a
+            sentence is derived from the meaning of its parts and the way in
+            which they are combined. For example, the meaning of the sentence
+            "Red apples are delicious" can be broken down into the smaller
+            sub-phrases "Red apples" and "are delicious", both of which have
+            their own meanings (which can further be broken down, etc.). This
+            sort of hierarchical composition is often represented using
+            tree-based linguistic structures, which have been shown to be a
+            common way for humans to understand language and have been
+            correlated with increased compositional generalization in models
+            (Murty et al., 2022). In a recent paper, Murty et al. introduced a
+            novel metric, \( \mathbf{t_{\text{score}}} \), to measure how
+            tree-structured a transformer model is. Using this metric, they
+            demonstrated a correlation between a high \(
+            \mathbf{t_{\text{score}}} \) (indicating tree-structuredness) and
+            increased compositional generalization in transformer models. This
+            metric is defined as follows:
 
             <span class="math display"
               >\[ t_{\text{score}} \triangleq \frac{1}{|\mathcal{D}|} \sum_{S
@@ -180,12 +202,19 @@
               \widehat{T}_{\text{proj}}(S) \right) \right). \]</span
             >
 
-            This metric searches for the optimal bracketing of an input sentence
-            that maximizes the span contextual invariance (SCI) of each bracket.
-            By using a similarity function to measure how similar the embedding
-            of the bracketed sentence is to the original sentence embedding, we
-            can determine a relative score for how effective the transformer is
-            at learning heierarchical composition. A visual representation of a
+            While it looks complicated, the purpose of this function is
+            relatively simply, it searches for the optimal bracketing of an
+            input sentence that maximizes the span contextual invariance (SCI)
+            of each bracket. By maximizing the SCI of each of the sub-phrases,
+            the function is finding the most optimal place in the sentence to
+            split the words while maintaining chunks of text that have intrinsic
+            meaning (for example, a bad bracketing of "red apples are delicious"
+            would be "red apples are" and "delicious" because the phrase "red
+            apples are" is not an independent clause with intrinsic meaning). By
+            using a similarity function to measure how similar the embedding of
+            the bracketed sentence is to the original sentence embedding, we can
+            determine a relative score for how effective the transformer is at
+            learning heierarchical composition. A visual representation of a
             tranformer comparing a bracketed embedding to the original embedding
             can be seen in Figure 2 below.
             <br />
@@ -219,7 +248,7 @@
               <li>
                 <strong><span>Step 1 | Baseline Language Model</span></strong
                 >: Train GPT2-small architectures (6 and 12 encoder layers) on
-                the small dataset (10M tokens).
+                the dataset (10M tokens) provided by the BabyLM Challenge.
               </li>
               <br />
               <li>
@@ -242,11 +271,16 @@
                   ><span
                     >Step 4 | Encouraging Tree-Structured Computations</span
                   ></strong
-                >: We replaced the cross-entropy loss \(
+                >: Replace the cross-entropy loss \(
                 \mathcal{L}_{\text{entropy}} \) of GPT-2 by a regularized loss:
                 \( \mathcal{L}_{\text{entropy}} + \lambda
                 \mathcal{L}_{\text{tree}} \) to encourage the transformer to
                 learn tree-structured representations of inputs.
+              </li>
+              <br />
+              <li>
+                <strong><span>Step 5 | Re-evaluate the Model</span></strong
+                >: Re-evaluate the model using the same metrics as in Step 2.
               </li>
             </ul>
             To calculate the additional \( \mathcal{L}_{\text{tree}} \) loss
@@ -269,14 +303,15 @@
 
             <h4>Experimental Results</h4>
             To begin this study, the two baseline GPT2 architectures described
-            above were evaluated. The difference in performance was found to be
-            very minor, so moved forward using only the 6-layer encoder model
-            for increased iteration speed. We then measured the model
-            performance on perplexity, which can be seen in Figure 3 and found
-            it to be decreasing over time. Next, we ran a ensemble of syntactic
-            evaluations using BLiMP (the Benchmark of Linguistic Minimal Pairs)
-            framework (Warstadt et al., 2020), the scores of which can be seen
-            in Table 1 below.
+            above were evaluated (6 and 12 layer versions). The difference in
+            performance was found to be very minor, so moved forward using only
+            the 6-layer encoder model for increased iteration speed. We then
+            measured the model performance on perplexity, which can be seen in
+            Figure 3 and found it to decrease as the model trained (indicating
+            increasing ability of the model to correctly predict future tokens).
+            Next, we ran a ensemble of syntactic evaluations using BLiMP (the
+            Benchmark of Linguistic Minimal Pairs) framework (Warstadt et al.,
+            2020), the scores of which can be seen in Table 1 below.
             <br />
             <br />
 
@@ -307,12 +342,13 @@
             <h6>Table 1. BLiMP Scores</h6>
             <br />
             BLiMP scores tests the model's ability to discern a grammatically
-            incorrect sentence from a pair of sentences, making the random
-            chance score equal to 50%. Lastly, the model \( t_{\text{score}} \)
-            was calculated, and showed an increase in tree-structuredness as
-            training progresed and model performance increased. This mirrors the
-            correlation described by Murty et al. (2022), but still does not
-            show causation.
+            incorrect sentence from a pair of sentences (one correct, one
+            incorrect), making the random chance score equal to 50%.
+            Additionally, the model \( t_{\text{score}} \) was calculated at
+            several points during training and showed an increase in
+            tree-structuredness as training progressed and model performance
+            increased. This mirrors the correlation described by Murty et al.
+            (2022), but still does not indicate causation.
             <br />
             <br />
 
@@ -326,23 +362,14 @@
             <h6>Figure 3. Baseline Model Results</h6>
             <br />
             <h4>Discussion</h4>
-            The updated GPT2 architecture with a tree-regularizing loss function
-            was retrained on the same data as the baseline model. Its evaluation
-            accuracy is plotted in orange below against the 6 layer encoder
-            baseline model. Perplexity, BLiMP score, and \( t_{\text{score}} \)
-            plots are omitted in this section as they show stochastic behavior
-            as seen in Figure 4 below and do not provide further insight into
-            the behavior of the model.
+            Finally, the updated GPT2 architecture with a tree-regularizing loss
+            function was retrained on the same data as the baseline model. Its
+            evaluation accuracy is plotted in orange below against the 6 layer
+            encoder baseline model. Perplexity, BLiMP score, and \(
+            t_{\text{score}} \) plots are omitted in this section as they show
+            stochastic behavior similar to that seen in Figure 4 below and do
+            not provide further insight into the behavior of the model.
             <br />
-            <br />
-            <p>
-              <a class="image fit"
-                ><img
-                  src="/images/evalAcc.png"
-                  alt="Evaluation accuracy for baseline and tree-regularized GPT2 models"
-              /></a>
-            </p>
-            <h6>Figure 4. Evaluation Accuracy</h6>
             <br />
             Astute observers may notice that the following figure does not
             describe a successful improvement in model performance. Even more
@@ -353,6 +380,16 @@
             propelling these tests are not inherently flawed, instead the issues
             likely arose from limiting factors imposed on our implementations.
             <br />
+            <br />
+            <p>
+              <a class="image fit"
+                ><img
+                  src="/images/evalAcc.png"
+                  alt="Evaluation accuracy for baseline and tree-regularized GPT2 models"
+              /></a>
+            </p>
+            <h6>Figure 4. Evaluation Accuracy</h6>
+
             <br />
             By checking the \( t_{\text{score}} \) of the model at various
             checkpoints, we can see that the model was learning to produce more
@@ -376,7 +413,8 @@
             sentence batch size to 50. A future goal of this study would be to
             quantify the impact of these assumptions by running the model with
             increasing words and batch sizes, as it is currently unknown how
-            heavily this impacts the model performance.
+            heavily this impacts the model performance (although I believe this
+            impact to be significant).
             <br />
             <br />
             Both of these assumptions likely have very large impacts on model
@@ -410,7 +448,8 @@
             Hopefully this avenue is explored in the future so that further
             research can be conducted on the impact of imposed tree-structured
             computations in transformer models and their abilities to gain
-            increased compositional generalization.
+            increased compositional generalization without the need for massive
+            training corpuses.
             <br />
             <br />
             <h4>References</h4>
